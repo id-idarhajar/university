@@ -1,0 +1,88 @@
+<odoo>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="department_list_view">
+      <field name="name">department list</field>
+      <field name="model">university.department</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="code"/>
+        </list>
+      </field>
+    </record>
+
+      <!-- explicit form view definition -->
+
+    <record model="ir.ui.view" id="department_form_view">
+      <field name="name">department form</field>
+      <field name="model">university.department</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+             <group>
+               <field name="name"/>
+               <field name="code"/>
+             </group>
+             <notebook> 
+                     <page string="Liste des professeurs">
+                        <field name="professeur_ids"/>
+                     </page>  
+                     <page string="Liste des etudiants">
+                        <field name="eudiant_ids"/>
+                     </page>  
+                     <page string="Liste des matieres">
+                        <field name="matiere_ids"/>
+                     </page> 
+              </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+         
+
+      <!-- kanban-->
+
+     <record model="ir.ui.view" id="department_kanban_view">
+        <field name="name">department kanban</field>
+        <field name="model">university.department</field>
+        <field name="arch" type="xml">
+           <kanban>
+              <templates>
+                  <t t-name="card">
+                      <div class="oe_kanban_card">
+                        <strong>
+                        <field name="name"/>
+                        </strong>
+                       <div>
+                        Code: <field name="code"/>
+                       </div>
+                       </div>
+                 </t>
+               </templates>
+            </kanban>
+        </field>
+     </record>
+   
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="department_action_window">
+      <field name="name">departement</field>
+      <field name="res_model">university.department</field>
+      <field name="view_mode">list,form,kanban</field>
+    
+
+    <!-- menu categories -->
+
+    <menuitem name="Departement" id="university_department" parent="university.menu_root"/>
+ 
+    <!-- actions -->
+
+    <menuitem name="Liste des departements" id="university_department_list" parent="university_department"
+              action="department_action_window"/>
+
+
+</odoo>

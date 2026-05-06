@@ -1,0 +1,105 @@
+<odoo>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="student_list_view">
+      <field name="name">student list</field>
+      <field name="model">university.student</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="prenom"/>
+          <field name="nom"/>
+          <field name="genre"/>
+          <field name="identite"/>
+          <field name="naissance"/>
+          <field name="date_inscription"/>
+          <field name="num_tel"/>
+          <field name="email"/>
+        </list>
+      </field>
+    </record>
+
+      <!-- explicit form view definition -->
+
+    <record model="ir.ui.view" id="student_form_view">
+      <field name="name">student form</field>
+      <field name="model">university.student</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+             <group>
+         
+           <field name="prenom"/>
+          <field name="nom"/>
+          <field name="genre"/>
+          <field name="identite"/>
+          <field name="naissance"/>
+          <field name="date_inscription"/>
+          <field name="num_tel"/>
+          <field name="email"/>
+          <field name="departement_id"/>
+          <field name="classe_id"/>
+             </group>
+             <notebook>  
+                     <page string="Matieres">
+                        <field name="matiere_ids"/>
+                     </page> 
+             </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+      
+          <!-- kanban-->
+
+     <record model="ir.ui.view" id="student_kanban_view">
+      <field name="name">student kanban</field>
+      <field name="model">university.student</field>
+      <field name="arch" type="xml">
+           <kanban>
+              <templates>
+                  <t t-name="card">
+                      <div class="oe_kanban_card">
+                        <strong>
+                        <field name="prenom"/>
+                        <field name="nom"/>
+                        </strong>
+                       <div>
+                        Email: <field name="email"/>
+                       </div>
+                       </div>
+                 </t>
+               </templates>
+            </kanban>
+        </field>
+     </record>
+
+     <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="student_action_window">
+      <field name="name">étudiant</field>
+      <field name="res_model">university.student</field>
+      <field name="view_mode">list,form,kanban</field>
+      
+      <!--     <field name="search_view_id" ref="student_search_view"/>    -->
+    </record>
+
+
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="université" id="university.menu_root"
+          web_icon="université_student,static/description/icon.png"
+          sequence = "10"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Étudiant" id="university_student" parent="university.menu_root"/>
+ 
+    <!-- actions -->
+
+    <menuitem name="Liste des étudiants" id="university_student_list" parent="university_student"
+              action="student_action_window"/>
+   
+</odoo>

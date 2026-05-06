@@ -1,0 +1,113 @@
+<odoo>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="classroom_list_view">
+      <field name="name">classroom list</field>
+      <field name="model">university.classroom</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name_class"/>
+          <field name="code"/>
+        </list>
+      </field>
+    </record>
+
+      <!-- explicit form view definition -->
+
+    <record model="ir.ui.view" id="classroom_form_view">
+      <field name="name">classroom form</field>
+      <field name="model">university.classroom</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+             <group>
+               <field name="name_class"/>
+               <field name="code"/>
+               <field name="nombre_etudiants"/>
+             </group>
+                  <notebook> 
+                     <page string="Liste des professeurs">
+                        <field name="professeur_ids"/>
+                     </page>  
+                     <page string="Liste des etudiants">
+                        <field name="etudiant_ids"/>
+                     </page>  
+                     <page string="Liste des matieres">
+                        <field name="matiere_ids"/>
+                     </page> 
+                  </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+      
+
+       <!-- kanban-->
+
+     <record model="ir.ui.view" id="classroom_kanban_view">
+      <field name="name">classroom kanban</field>
+      <field name="model">university.classroom</field>
+      <field name="arch" type="xml">
+           <kanban>
+              <templates>
+                  <t t-name="card">
+                      <div class="oe_kanban_card">
+                        <strong>
+                        <field name="name_class"/>
+                        </strong>
+                       <div>
+                        Code: <field name="code"/>
+                       </div>
+                       </div>
+                 </t>
+               </templates>
+            </kanban>
+        </field>
+     </record>
+       
+
+       <!-- Graph-->
+     <record model="ir.ui.view" id="classroom_graph_view">
+       <field name="name">classroom graph bar</field>
+       <field name="model">university.classroom</field>
+       <field name="arch" type="xml">
+          <graph string="Nombre d'etudiants par classe" type="bar">
+             <field name="name_class" type="row"/>
+             <field name="nombre_etudiants" type="measure" operator="sum"/>
+          </graph>
+        </field>
+      </record>
+
+
+       <record id="classroom_graph_pie" model="ir.ui.view">
+          <field name="name">classroom graph pie</field>
+          <field name="model">university.classroom</field>
+          <field name="arch" type="xml">
+             <graph string="Répartition des étudiants" type="pie">
+                <field name="name_class" type="row"/>
+                <field name="nombre_etudiants" type="measure" operator="sum"/>
+             </graph>
+           </field>
+        </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="classroom_action_window">
+      <field name="name">classe</field>
+      <field name="res_model">university.classroom</field>
+      <field name="view_mode">list,form,kanban,graph</field>
+    </record>
+
+
+       <!-- menu categories -->
+
+      <menuitem name="Classe" id="university_classroom" parent="university.menu_root"/>
+     
+     <!-- actions -->
+
+     <menuitem name="Liste des classes" id="university_classroom_list" parent="university_classroom"
+              action="classroom_action_window"/>
+     
+</odoo>
