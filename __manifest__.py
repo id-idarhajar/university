@@ -25,9 +25,5 @@
          'views/department_views.xml',
          'views/classroom_views.xml',
     ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ] ,
 }
 
