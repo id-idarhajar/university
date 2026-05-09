@@ -22,16 +22,18 @@
         <form>
           <sheet>
              <group>
-               <field name="name_class"/>
-               <field name="code"/>
+               <field name="name_class" placeholder="Nom de la classe (ex: 1A, 2B)"/>
+               <field name="code" placeholder="Code de la classe"/>
                <field name="nombre_etudiants"/>
+               <field name="nombre_prof"/>
              </group>
                   <notebook> 
                      <page string="Liste des professeurs">
                         <field name="professeur_ids"/>
                      </page>  
                      <page string="Liste des etudiants">
-                        <field name="etudiant_ids"/>
+                        <field name="etudiant_ids">
+                        </field>
                      </page>  
                      <page string="Liste des matieres">
                         <field name="matiere_ids"/>
@@ -74,7 +76,7 @@
        <field name="arch" type="xml">
           <graph string="Nombre d'etudiants par classe" type="bar">
              <field name="name_class" type="row"/>
-             <field name="nombre_etudiants" type="measure" operator="sum"/>
+             <field name="nombre_etudiants" type="measure" operator="count"/>
           </graph>
         </field>
       </record>
@@ -86,7 +88,7 @@
           <field name="arch" type="xml">
              <graph string="Répartition des étudiants" type="pie">
                 <field name="name_class" type="row"/>
-                <field name="nombre_etudiants" type="measure" operator="sum"/>
+                <field name="nombre_etudiants" type="measure" operator="count"/>
              </graph>
            </field>
         </record>

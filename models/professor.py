@@ -4,8 +4,8 @@ class UniversityProfessor(models.Model):
      _name = 'university.professor'
      _rec_name = 'nom'
 
-     prenom = fields.Char("Prénom")
-     nom = fields.Char("Nom")
+     prenom  = fields.Char("Prénom" , required=True)
+     nom = fields.Char("Nom", required=True)
      genre = fields.Selection([('homme','Homme'),('femme','Femme')], string="Genre")
      identite = fields.Char("Carte d'identité")
      adresse = fields.Text("Adresse")
@@ -18,8 +18,8 @@ class UniversityProfessor(models.Model):
      matiere_id = fields.Many2one(comodel_name='university.subject')
 
      classe_ids = fields.Many2many(comodel_name='university.classroom',
-                                   relation= 'prof_class_rel',
-                                   column1= 'prenom',
-                                   column2='name_class')
+                                        relation= 'class_prof_rel',
+                                        column1= 'prenom',
+                                        column2='name_class')
 
 

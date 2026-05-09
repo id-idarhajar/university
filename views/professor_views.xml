@@ -29,17 +29,21 @@
         <form>
           <sheet>
              <group>
-                <field name="prenom"/>
-                <field name="nom"/>
-                <field name="genre"/>
-                <field name="identite"/>
-                <field name="naissance"/>
-                <field name="date_debut"/>
-                <field name="num_tel"/>
-                <field name="email"/>
-                <field name="adresse"/>
-                <field name="departement_id"/>
-                <field name="matiere_id"/>
+                <group>
+                    <field name="prenom" placeholder="Prénom du professeur"/>
+                    <field name="nom" placeholder="Nom du professeur"/>
+                    <field name="genre" placeholder="Choisir genre"/>
+                    <field name="identite" placeholder="Numéro d'identité"/>
+                    <field name="naissance" placeholder="Date de naissance"/>
+                    <field name="date_debut" placeholder="Date de début"/>
+                </group>
+                <group>
+                    <field name="num_tel" placeholder="Numéro de téléphone"/>
+                    <field name="email" placeholder="exemple@gmail.com"/>
+                    <field name="adresse" placeholder="Adresse complète"/>
+                    <field name="departement_id" placeholder="Choisir département"/>
+                    <field name="matiere_id" placeholder="Choisir matière"/>
+                 </group>
              </group>
              <notebook>  
                   <page string="Classes">
@@ -78,6 +82,44 @@
      </record>
 
 
+       <!-- search view-->
+     <record model="ir.ui.view" id="professor_search_view">
+        <field name="name">professor search</field>
+        <field name="model">university.professor</field>
+        <field name="arch" type="xml">
+            <search>
+
+                <field name="prenom"/>
+                <field name="nom"/>
+                <field name="email"/>
+
+                <filter name="homme"
+                        string="Hommes"
+                        domain="[('genre','=','homme')]"/>
+
+                <filter name="femme"
+                        string="Femmes"
+                        domain="[('genre','=','femme')]"/>
+
+                <separator/>
+
+                <filter name="group_by_departement"
+                        string="Par département"
+                        context="{'group_by':'departement_id'}"/>
+
+                <filter name="group_by_matiere"
+                        string="Par matière"
+                        context="{'group_by':'matiere_id'}"/>
+
+                <filter name="group_by_genre"
+                        string="Par genre"
+                        context="{'group_by':'genre'}"/>
+
+            </search>
+         </field>
+      </record>
+
+
 
     <!-- actions opening views on models -->
 
@@ -85,6 +127,7 @@
       <field name="name">professeur</field>
       <field name="res_model">university.professor</field>
       <field name="view_mode">list,form,kanban</field>
+      <field name="search_view_id" ref="professor_search_view"/>
     </record>
 
     <!-- menu categories -->

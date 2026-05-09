@@ -24,18 +24,21 @@
           <sheet>
              <group>
          
-          <field name="name"/>
-          <field name="code"/>
-          <field name="departement_id"/>
-          <field name="etudiant_id"/>
+          <field name="name" placeholder="Nom de la matière (ex: Math, Physique)"/>
+          <field name="code" placeholder="Code de la matière (ex: MTH101)"/>
+          <field name="departement_id" placeholder="Choisir le département"/>
              </group>
              <notebook> 
                      <page string="Liste des professeurs">
                         <field name="professeur_ids"/>
                      </page>    
+                     <page string="Liste des etudiants">
+                        <field name="etudiant_ids"/>
+                     </page>
                      <page string="Classes">
                         <field name="classe_ids"/>
-                     </page> 
+                     </page>
+                     
              </notebook>
           </sheet>
         </form>

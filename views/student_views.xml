@@ -26,25 +26,51 @@
       <field name="model">university.student</field>
       <field name="arch" type="xml">
         <form>
+          <header>
+            <button name="action_inscrire"
+                    string="Valider inscription"
+                    type="object"
+                    class="btn-primary"/>
+            <button name="action_archive"
+                    string="Archiver"
+                    type="object"
+                    class="btn-danger"/>
+
+                    <field name="state" widget="statusbar"/>
+          </header>
           <sheet>
-             <group>
-         
-           <field name="prenom"/>
-          <field name="nom"/>
-          <field name="genre"/>
-          <field name="identite"/>
-          <field name="naissance"/>
-          <field name="date_inscription"/>
-          <field name="num_tel"/>
-          <field name="email"/>
-          <field name="departement_id"/>
-          <field name="classe_id"/>
-             </group>
-             <notebook>  
+              <group>
+                <group>
+                  <field name="photo"
+                        widget="image"
+                        class="oe_avatar"/>
+                </group>
+                <group>
+                    <field name="prenom" placeholder="Prénom de l'étudiant"/>
+                    <field name="nom" placeholder="Nom de l'étudiant"/>
+                    <field name="genre"/>
+                    <field name="identite" placeholder="Numéro d'identité"/>
+                    <field name="naissance" placeholder="Date de naissance"/>
+                </group>
+                <group>
+                    <field name="date_inscription" placeholder="Date d'inscription"/>
+                    <field name="num_tel" placeholder="Numéro de téléphone"/>
+                    <field name="email" placeholder="exemple@gmail.com"/>
+                    <field name="departement_id" placeholder="Choisir département"/>
+                    <field name="classe_id" placeholder="Choisir classe"/>
+                </group>
+                <group>
+                    <field name="active"/>
+                    <field name="niveau" placeholder="Niveau d'étude"/>
+                    <field name="moyenne" placeholder="Ex: 15.5"/>
+                </group>
+              </group>
+
+              <notebook>  
                      <page string="Matieres">
                         <field name="matiere_ids"/>
                      </page> 
-             </notebook>
+              </notebook>
           </sheet>
         </form>
       </field>
@@ -73,15 +99,73 @@
             </kanban>
         </field>
      </record>
+         <!-- calendar view-->
+      <record id="student_calendar_view" model="ir.ui.view">
+          <field name="name">student calendar</field>
+          <field name="model">university.student</field>
+          <field name="arch" type="xml">
+
+              <calendar string="Calendrier des inscriptions"
+                        date_start="date_inscription"
+                        color="niveau">
+
+                  <field name="prenom"/>
+                  <field name="nom"/>
+                  <field name="niveau"/>
+
+              </calendar>
+          </field>
+      </record>
+
+
+
+          <!-- search view -->
+     <record id="student_search_view" model="ir.ui.view">
+      <field name="name">student search</field>
+      <field name="model">university.student</field>
+      <field name="arch" type="xml">
+          <search>
+
+              <field name="prenom"/>
+              <field name="nom"/>
+              <field name="email"/>
+
+              <!-- Filters -->
+              <filter name="actif" string="Actifs" domain="[('active','=',True)]"/>
+              <filter name="inactif" string="Inactifs" domain="[('active','=',False)]"/>
+
+              <filter name="l1" string="L1" domain="[('niveau','=','l1')]"/>
+              <filter name="l2" string="L2" domain="[('niveau','=','l2')]"/>
+              <filter name="m1" string="M1" domain="[('niveau','=','m1')]"/>
+
+              <filter name="homme" string="Hommes" domain="[('genre','=','homme')]"/>
+              <filter name="femme" string="Femmes" domain="[('genre','=','femme')]"/>
+
+              <!-- Group By -->
+              <filter name="group_by_niveau"
+                      string="Par niveau"
+                      context="{'group_by':'niveau'}"/>
+
+              <filter name="group_by_classe"
+                      string="Par classe"
+                      context="{'group_by':'classe_id'}"/>
+
+              <filter name="group_by_departement"
+                      string="Par département"
+                      context="{'group_by':'departement_id'}"/>
+
+          </search>
+       </field>
+     </record>
+
 
      <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="student_action_window">
       <field name="name">étudiant</field>
       <field name="res_model">university.student</field>
-      <field name="view_mode">list,form,kanban</field>
-      
-      <!--     <field name="search_view_id" ref="student_search_view"/>    -->
+      <field name="view_mode">list,form,kanban,calendar</field>
+      <field name="search_view_id" ref="student_search_view"/>
     </record>
 
 
